@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://dw6vkl2notu5f"]
+
+[ext_resource type="Script" path="res://player/camera.gd" id="1_nrjvs"]
+
+[node name="CameraController" type="Node3D" groups=["Camera"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0789399, 0)
+script = ExtResource("1_nrjvs")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45146, 1.53133)
+collision_mask = 3
+spring_length = 5.0
+margin = 1.0
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.89344)
+
+[node name="LookAt" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.82923, -21.692)

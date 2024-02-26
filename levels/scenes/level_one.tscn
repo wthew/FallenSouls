@@ -1,0 +1,67 @@
+[gd_scene load_steps=12 format=3 uid="uid://b16e5xifetpp4"]
+
+[ext_resource type="PackedScene" uid="uid://4tu2juc832co" path="res://player/frisk.tscn" id="1_tyju8"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="2_88vj7"]
+[ext_resource type="Resource" path="res://levels/scenes/map/data.hterrain" id="3_gd2x5"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="4_e0b4o"]
+[ext_resource type="Texture2D" uid="uid://dyiwmwf5g1ny3" path="res://lib/textures/stone_floor.jpg" id="5_yrfpn"]
+[ext_resource type="PackedScene" uid="uid://dw6vkl2notu5f" path="res://player/camera.tscn" id="6_6esie"]
+
+[sub_resource type="Resource" id="Resource_seb51"]
+script = ExtResource("4_e0b4o")
+mode = 0
+textures = [[ExtResource("5_yrfpn")], [null]]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_m5w4g"]
+rayleigh_coefficient = 2.79
+rayleigh_color = Color(0.00392157, 0, 0.0117647, 1)
+mie_color = Color(0.0470588, 0.0313726, 0.211765, 1)
+sun_disk_scale = 0.0
+ground_color = Color(0.101961, 0.0705882, 0.0352941, 1)
+
+[sub_resource type="Sky" id="Sky_e26n7"]
+sky_material = SubResource("PhysicalSkyMaterial_m5w4g")
+
+[sub_resource type="Environment" id="Environment_cwm40"]
+background_color = Color(0.054902, 0, 0.0392157, 1)
+sky = SubResource("Sky_e26n7")
+volumetric_fog_albedo = Color(0.235294, 0, 0.333333, 1)
+
+[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_f85d4"]
+
+[node name="Level_one" type="Node3D"]
+
+[node name="frisk" parent="." groups=["Player"] instance=ExtResource("1_tyju8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.54993, 0)
+
+[node name="HTerrain" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -128, 0, -128)
+script = ExtResource("2_88vj7")
+ambient_wind = 0.5
+map_scale = Vector3(0.5, 1, 0.5)
+_terrain_data = ExtResource("3_gd2x5")
+chunk_size = 32
+collision_enabled = true
+collision_layer = 3
+collision_mask = 3
+shader_type = "Classic4Lite"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_seb51")
+render_layers = 1
+cast_shadow = 0
+shader_params/u_ground_uv_scale = 20
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = false
+shader_params/u_tile_reduction = Vector4(0, 0, 0, 0)
+shader_params/u_specular = 0.5
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.237432, -0.594747, 0.768051, -0.204454, 0.803545, 0.559029, -0.949644, -0.0243, -0.312386, 0, 5.01632, 0)
+
+[node name="Camera" parent="." instance=ExtResource("6_6esie")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.62887, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_cwm40")
+camera_attributes = SubResource("CameraAttributesPhysical_f85d4")
